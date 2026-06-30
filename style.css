@@ -281,6 +281,16 @@ h1 {
   font-size: 4.7rem;
   line-height: 1.04;
   font-weight: 900;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+h1 span {
+  display: block;
+}
+
+.title-nowrap {
+  white-space: nowrap;
 }
 
 .hero-lead {
@@ -1095,6 +1105,155 @@ h1 {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Presentation layout: optimized for 1920 x 1080 screens. */
+@media (min-width: 1500px) and (max-width: 2559px) {
+  .site-nav {
+    width: min(1760px, calc(100% - 64px));
+  }
+
+  .section-shell {
+    width: min(1660px, calc(100% - 64px));
+    padding-top: 76px;
+    padding-bottom: 76px;
+  }
+
+  .hero {
+    width: min(1780px, calc(100% - 64px));
+    padding-top: 34px;
+    padding-bottom: 34px;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(500px, 0.74fr) minmax(1040px, 1.26fr);
+    gap: 28px;
+  }
+
+  .hero-copy-block {
+    max-width: 610px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: clamp(4.5rem, 4.35vw, 5.25rem);
+    line-height: 1.01;
+  }
+
+  .hero-lead {
+    max-width: 590px;
+    margin-bottom: 22px;
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    margin-bottom: 20px;
+  }
+
+  .method-strip span {
+    min-height: 32px;
+    padding: 6px 10px;
+  }
+
+  .hero-console {
+    grid-template-columns: minmax(600px, 1.08fr) minmax(420px, 0.92fr);
+    align-items: start;
+    gap: 14px;
+  }
+
+  .dashboard-panel,
+  .upload-panel {
+    padding: 18px;
+  }
+
+  .panel-head {
+    margin-bottom: 12px;
+  }
+
+  .panel-head h2 {
+    font-size: 1.18rem;
+  }
+
+  .kpi-grid {
+    gap: 9px;
+  }
+
+  .kpi-card {
+    min-height: 88px;
+    padding: 12px;
+  }
+
+  .kpi-card.wide {
+    min-height: 100px;
+  }
+
+  .kpi-card strong {
+    font-size: 2.18rem;
+  }
+
+  .kpi-card.wide strong {
+    font-size: 2.9rem;
+  }
+
+  .flow-map {
+    margin-top: 12px;
+  }
+
+  .flow-map span {
+    min-height: 32px;
+    font-size: 0.78rem;
+  }
+
+  .panel-copy {
+    margin-bottom: 10px;
+    font-size: 0.88rem;
+  }
+
+  .upload-drop {
+    min-height: 94px;
+    padding: 14px;
+  }
+
+  .upload-symbol {
+    width: 42px;
+    height: 42px;
+    font-size: 1.55rem;
+  }
+
+  .upload-actions {
+    margin-top: 8px;
+  }
+
+  .preview-wrap img {
+    max-height: 160px;
+  }
+
+  .notice {
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+
+  .loading-state {
+    min-height: 46px;
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  .result-card {
+    margin-top: 10px;
+    padding: 12px;
+  }
+
+  .result-actions {
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .small {
+    min-height: 36px;
+    padding: 8px 10px;
+    font-size: 0.82rem;
   }
 }
 
