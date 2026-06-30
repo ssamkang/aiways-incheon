@@ -48,6 +48,52 @@ const itemData = {
 
 const metricValues = {};
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const hotspotData = {
+  school: {
+    title: "우리학교 자원순환 관찰 데이터",
+    summary: "오늘 관찰 312건 / 판단 보류 21건 / 참여 반 14개",
+    message: "학교 단위 관찰 데이터를 5학년 1반 활동과 비교합니다.",
+  },
+  class: {
+    title: "5학년 1반 Dashboard",
+    summary: "오늘 관찰 128건 / AI 1차 분류 37건 / 학생 재확인 18건",
+    message: "첫 화면의 중심 데이터는 5학년 1반입니다.",
+  },
+  landfill: {
+    title: "수도권매립지 모니터",
+    summary: "생활폐기물 반입량 18,420t / 총량 대비 반입률 63.4%",
+    message: "DEMO · 공식 관리 지표 구조 참고 기반의 수업용 프로토타입입니다.",
+  },
+  bridge: {
+    title: "인천대교 데이터 라인",
+    summary: "교실 관찰 데이터가 지역 자원순환 경로로 확장되는 흐름",
+    message: "실제 교통·지도 API가 아닌 발표용 추상 관제 표현입니다.",
+  },
+  airport: {
+    title: "인천공항 확장 노드",
+    summary: "인천의 이동성과 순환 데이터를 상징하는 보조 지표",
+    message: "데이터 흐름의 확장 가능성을 보여주는 더미 노드입니다.",
+  },
+  gu: {
+    title: "우리구 비교 지표",
+    summary: "구 단위 참여 순위 12위 / 관찰 데이터 확산 중",
+    message: "우리반 데이터의 확장 범위를 보여주는 보조 지표입니다.",
+  },
+  dong: {
+    title: "우리동 비교 지표",
+    summary: "동 단위 참여 순위 7위 / 학교 주변 배출 혼선 관찰",
+    message: "학교 밖 생활권으로 연결되는 수업용 비교 노드입니다.",
+  },
+};
+
+const rankData = {
+  class: "5학년 1반 · 학년 내 1위",
+  grade: "5학년 전체 · 학교 내 2위",
+  school: "우리학교 · 동 단위 7위",
+  dong: "우리동 · 구 단위 12위",
+  gu: "우리구 · 인천 단위 48위",
+  incheon: "인천 전체 · 참여 데이터 확산 중",
+};
 
 let selectedFile = null;
 let currentItemKey = "paper";
@@ -58,6 +104,11 @@ let loadingTimer = null;
 document.addEventListener("DOMContentLoaded", () => {
   initializeCounters();
   bindScrollButtons();
+  bindAnchorNavigation();
+  bindSectionScroller();
+  bindControlHotspots();
+  bindMapSearch();
+  bindRankingFilters();
   bindUploadDemo();
   bindResultActions();
   bindQuickApp();
@@ -75,13 +126,226 @@ function initializeCounters() {
 function bindScrollButtons() {
   document.querySelectorAll("[data-scroll]").forEach((button) => {
     button.addEventListener("click", () => {
-      const target = document.querySelector(button.dataset.scroll);
-      if (!target) return;
-      target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+      const targetSelector = button.dataset.scroll === "#demo-card" ? "#project" : button.dataset.scroll;
+      smoothScrollToTarget(targetSelector);
 
       if (button.dataset.scroll === "#demo-card") {
-        window.setTimeout(() => document.querySelector("#imageUpload")?.focus(), 450);
+        highlightDemoCard();
+        window.setTimeout(() => document.querySelector("#imageUpload")?.focus(), 760);
       }
+    });
+  });
+}
+
+function highlightDemoCard() {
+  const card = document.querySelector("#demo-card");
+  if (!card) return;
+  card.classList.remove("is-highlighted");
+  void card.offsetWidth;
+  card.classList.add("is-highlighted");
+  window.setTimeout(() => card.classList.remove("is-highlighted"), 1300);
+}
+
+function bindAnchorNavigation() {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", (event) => {
+      const href = anchor.getAttribute("href");
+      if (!href || href === "#") return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      event.preventDefault();
+      smoothScrollToTarget(href);
+    });
+  });
+}
+
+function smoothScrollToTarget(selector) {
+  const target = document.querySelector(selector);
+  if (!target) return;
+
+  if (prefersReducedMotion || window.innerWidth < 900) {
+    target.scrollIntoView({ behavior: "auto", block: "start" });
+    return;
+  }
+
+  animateScrollTo(window.scrollY + target.getBoundingClientRect().top, 980);
+}
+
+function animateScrollTo(targetY, duration) {
+  const startY = window.scrollY;
+  const maxY = document.documentElement.scrollHeight - window.innerHeight;
+  const destination = Math.max(0, Math.min(targetY, maxY));
+  const distance = destination - startY;
+  const startTime = performance.now();
+
+  document.body.classList.add("is-section-scrolling");
+
+  function ease(t) {
+    return t < 0.5
+      ? 4 * t * t * t
+      : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    window.scrollTo(0, startY + distance * ease(progress));
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+      return;
+    }
+
+    window.scrollTo(0, destination);
+    window.setTimeout(() => document.body.classList.remove("is-section-scrolling"), 160);
+  }
+
+  requestAnimationFrame(step);
+}
+
+function bindSectionScroller() {
+  if (prefersReducedMotion) return;
+
+  const sections = [...document.querySelectorAll("main > .section-shell")];
+  if (!sections.length) return;
+
+  let isLocked = false;
+  let wheelDelta = 0;
+
+  function currentSectionIndex() {
+    const pivot = window.scrollY + window.innerHeight * 0.48;
+    return sections.reduce((closestIndex, section, index) => {
+      const sectionTop = section.offsetTop;
+      const closestTop = sections[closestIndex].offsetTop;
+      return Math.abs(sectionTop - pivot) < Math.abs(closestTop - pivot)
+        ? index
+        : closestIndex;
+    }, 0);
+  }
+
+  window.addEventListener(
+    "wheel",
+    (event) => {
+      if (window.innerWidth < 1180 || event.ctrlKey) return;
+      if (event.target.closest("input, textarea, select")) return;
+
+      if (isLocked) {
+        event.preventDefault();
+        return;
+      }
+
+      wheelDelta += event.deltaY;
+      if (Math.abs(wheelDelta) < 100) return;
+
+      event.preventDefault();
+      const direction = wheelDelta > 0 ? 1 : -1;
+      wheelDelta = 0;
+
+      const nextIndex = Math.max(0, Math.min(sections.length - 1, currentSectionIndex() + direction));
+      isLocked = true;
+      animateScrollTo(sections[nextIndex].offsetTop, 1080);
+      window.setTimeout(() => {
+        isLocked = false;
+      }, 1180);
+    },
+    { passive: false }
+  );
+
+  window.addEventListener("keydown", (event) => {
+    if (window.innerWidth < 1180 || event.target.closest("input, textarea, select")) return;
+    const keyMap = { PageDown: 1, ArrowDown: 1, PageUp: -1, ArrowUp: -1 };
+    if (event.key === "Home") {
+      event.preventDefault();
+      smoothScrollToTarget(`#${sections[0].id}`);
+      return;
+    }
+    if (event.key === "End") {
+      event.preventDefault();
+      smoothScrollToTarget(`#${sections[sections.length - 1].id}`);
+      return;
+    }
+    if (!(event.key in keyMap) || isLocked) return;
+    event.preventDefault();
+    const nextIndex = Math.max(0, Math.min(sections.length - 1, currentSectionIndex() + keyMap[event.key]));
+    isLocked = true;
+    animateScrollTo(sections[nextIndex].offsetTop, 1040);
+    window.setTimeout(() => {
+      isLocked = false;
+    }, 1140);
+  });
+}
+
+function bindControlHotspots() {
+  const buttons = document.querySelectorAll("[data-hotspot]");
+  if (!buttons.length) return;
+
+  buttons.forEach((button) => {
+    const activate = () => activateHotspot(button.dataset.hotspot);
+    button.addEventListener("mouseenter", activate);
+    button.addEventListener("focus", activate);
+    button.addEventListener("click", activate);
+  });
+}
+
+function activateHotspot(key, messageOverride) {
+  const data = hotspotData[key] || hotspotData.school;
+  const detail = document.querySelector("#hotspotDetail");
+  const title = document.querySelector("#hotspotTitle");
+  const summary = document.querySelector("#hotspotSummary");
+  const message = document.querySelector("#searchMessage");
+
+  document
+    .querySelectorAll("[data-hotspot]")
+    .forEach((button) => button.classList.toggle("is-active", button.dataset.hotspot === key));
+
+  if (title) title.textContent = data.title;
+  if (summary) summary.textContent = data.summary;
+  if (message) message.textContent = messageOverride || data.message;
+
+  if (detail) {
+    detail.classList.remove("is-floating");
+    void detail.offsetWidth;
+    detail.classList.add("is-floating");
+  }
+}
+
+function bindMapSearch() {
+  const form = document.querySelector("#mapSearch");
+  const input = document.querySelector("#mapSearchInput");
+  if (!form || !input) return;
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const query = input.value.replace(/\s/g, "");
+    let key = "";
+
+    if (query.includes("우리학교") || query.includes("학교")) key = "school";
+    if (query.includes("5학년1반") || query.includes("1반")) key = "class";
+    if (query.includes("수도권매립지") || query.includes("매립지")) key = "landfill";
+
+    if (key) {
+      activateHotspot(key, "검색 결과를 관제 지도에서 강조했습니다.");
+      return;
+    }
+
+    const message = document.querySelector("#searchMessage");
+    if (message) {
+      message.textContent = "현재 데모에서는 우리학교, 5학년 1반, 수도권매립지를 확인할 수 있습니다.";
+    }
+  });
+}
+
+function bindRankingFilters() {
+  const headline = document.querySelector("#rankHeadline");
+  const meta = document.querySelector("#rankMeta");
+  const buttons = document.querySelectorAll("[data-rank-scope]");
+  if (!headline || !buttons.length) return;
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((scopeButton) => scopeButton.classList.remove("is-active"));
+      button.classList.add("is-active");
+      headline.textContent = rankData[button.dataset.rankScope] || rankData.class;
+      if (meta) meta.textContent = "DEMO RANKING · 수업용 순위 시뮬레이션";
     });
   });
 }
@@ -184,8 +448,8 @@ function bindResultActions() {
 
     updateMetric("moments", 1);
     updateMetric("requests", 1);
-    updateMetric("paper", 1);
     updateMetric("confirmed", 1);
+    updateMetric("converted", 1);
     recordFinalized = true;
     setResultStatus("대시보드 반영 완료");
   });
