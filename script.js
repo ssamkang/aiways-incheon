@@ -87,6 +87,7 @@ let selectedFile = null;
 let currentItemKey = "paper";
 let resultVisible = false;
 let recordFinalized = false;
+let analysisMetricApplied = false;
 let loadingTimer = null;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -107,26 +108,26 @@ function initializeCounters() {
     const key = counter.dataset.kpi;
     const target = Number(counter.dataset.target || 0);
     metricValues[key] = target;
-    animateCounter(counter, 0, target, 1100);
+    counter.textContent = String(target);
   });
 }
 
 function bindScrollButtons() {
   document.querySelectorAll("[data-scroll]").forEach((button) => {
     button.addEventListener("click", () => {
-      const targetSelector = button.dataset.scroll === "#demo-card" ? "#project" : button.dataset.scroll;
+      const targetSelector = button.dataset.scroll === "#demo-card" ? "#classify" : button.dataset.scroll;
       smoothScrollToTarget(targetSelector);
 
       if (button.dataset.scroll === "#demo-card") {
         highlightDemoCard();
-        window.setTimeout(() => document.querySelector("#imageUpload")?.focus(), 760);
+        window.setTimeout(() => document.querySelector("#wasteImageInput, #imageUpload")?.focus(), 760);
       }
     });
   });
 }
 
 function highlightDemoCard() {
-  const card = document.querySelector("#demo-card");
+  const card = document.querySelector("#classify, #demo-card");
   if (!card) return;
   card.classList.remove("is-highlighted");
   void card.offsetWidth;
@@ -319,9 +320,10 @@ function bindRankingTabs() {
 }
 
 function bindUploadDemo() {
-  const input = document.querySelector("#imageUpload");
-  const startButton = document.querySelector("#startAnalysis");
+  const input = document.querySelector("#wasteImageInput, #imageUpload");
+  const startButton = document.querySelector("#startAiGuess, #startAnalysis");
   const dropZone = document.querySelector("#dropZone");
+  if (!input || !startButton || !dropZone) return;
 
   input.addEventListener("change", (event) => {
     const file = event.target.files?.[0];
@@ -366,6 +368,7 @@ function handleSelectedFile(file) {
   currentItemKey = "paper";
   resultVisible = false;
   recordFinalized = false;
+  analysisMetricApplied = false;
   clearTimeout(loadingTimer);
 
   const previewWrap = document.querySelector("#previewWrap");
@@ -377,8 +380,7 @@ function handleSelectedFile(file) {
   previewWrap.classList.remove("is-hidden");
 
   hideResult();
-  showDemoMessage("사진이 업로드되었습니다. AI 1차 추정 시연을 시작합니다.", false);
-  runMockAnalysis();
+  showDemoMessage("사진이 업로드되었습니다. AI 1차 추정 시작 버튼을 눌러 시연을 진행하세요.", false);
 }
 
 function runMockAnalysis() {
@@ -395,6 +397,7 @@ function runMockAnalysis() {
 
   document.querySelector("#loadingState").classList.remove("is-hidden");
   showDemoMessage("AI가 최종 정답을 확정하지 않고 1차 분류만 제안합니다.", false);
+  applyAnalysisMetrics();
 
   loadingTimer = window.setTimeout(() => {
     document.querySelector("#loadingState").classList.add("is-hidden");
@@ -414,9 +417,7 @@ function bindResultActions() {
       return;
     }
 
-    updateMetric("moments", 1);
-    updateMetric("requests", 1);
-    updateMetric("confirmed", 1);
+    applyAnalysisMetrics();
     updateMetric("converted", 1);
     recordFinalized = true;
     setResultStatus("대시보드 반영 완료");
@@ -431,7 +432,7 @@ function bindResultActions() {
   document.querySelector("#holdResult").addEventListener("click", () => {
     if (!ensureResultReady()) return;
     if (!recordFinalized) {
-      updateMetric("held", 1);
+      updateMetric("class-hold", 1);
       recordFinalized = true;
     }
     setResultStatus(
@@ -445,6 +446,14 @@ function bindResultActions() {
       setResultStatus("선택한 물건 기준으로 안내 카드가 변경되었습니다.");
     });
   });
+}
+
+function applyAnalysisMetrics() {
+  if (analysisMetricApplied) return;
+  updateMetric("today-observed", 1);
+  updateMetric("ai-classified", 1);
+  updateMetric("human-confirmed", 1);
+  analysisMetricApplied = true;
 }
 
 function bindQuickApp() {
