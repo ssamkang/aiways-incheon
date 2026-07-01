@@ -8,11 +8,30 @@
       name="description"
       content="AI와 데이터로 실천하는 학교 자원순환 UX 개선 프로젝트 대시보드"
     />
-    <link rel="stylesheet" href="./style.css?v=clean-dashboard-hero" />
-    <script defer src="./script.js?v=clean-dashboard-hero"></script>
+    <link rel="stylesheet" href="./style.css?v=motion-class-dashboard" />
+    <script defer src="./script.js?v=motion-class-dashboard"></script>
   </head>
   <body>
     <a class="skip-link" href="#project">본문 바로가기</a>
+
+    <div class="intro-overlay" id="introOverlay" aria-label="AI Ways Incheon intro animation">
+      <button class="intro-skip" type="button" id="skipIntro">건너뛰기</button>
+      <div class="intro-scene intro-door" aria-hidden="true">
+        <span class="door-panel left"></span>
+        <span class="door-panel right"></span>
+        <span class="intro-flight"></span>
+      </div>
+      <div class="intro-scene intro-bridge" aria-hidden="true"></div>
+      <div class="intro-scene intro-logo-scene" aria-hidden="true">
+        <img src="./aiways-intro-landscape.png" alt="" decoding="async" onerror="this.hidden=true" />
+      </div>
+      <div class="intro-scene intro-clean-logo" aria-hidden="true">
+        <img src="./aiways-logo-clean.png" alt="" decoding="async" onerror="this.hidden=true" />
+      </div>
+      <div class="intro-final-mark" aria-hidden="true">
+        <img src="./aiways-logo.png" alt="" decoding="async" />
+      </div>
+    </div>
 
     <header class="site-header">
       <nav class="site-nav" aria-label="주요 메뉴">
@@ -36,8 +55,8 @@
     </header>
 
     <main>
-      <section class="hero section-shell control-hero" id="project">
-        <div class="control-hero-grid">
+      <section class="hero section-shell control-hero story-section hero-story" id="project">
+        <div class="control-hero-grid sticky-stage">
           <div class="hero-copy-block control-copy">
             <p class="eyebrow">학생의 버리는 순간을 읽는 자원순환 분석 엔진</p>
             <h1>
@@ -111,31 +130,66 @@
                     <p class="panel-kicker">Class Resource Dashboard</p>
                     <h2 id="dashboard-title">우리반 자원순환 대시보드</h2>
                     <p class="panel-copy">
-                      우리반의 버리는 순간을 기록하고, 학교 자원순환 UX 개선 데이터로 전환합니다.
+                      우리반의 버리는 순간을 AI와 함께 분류하고, 다시 확인한 기록입니다.
                     </p>
                   </div>
                   <span class="sync-chip">5학년 1반</span>
                 </div>
 
-                <div class="kpi-grid class-kpi-grid" aria-label="5학년 1반 자원순환 지표">
-                  <article class="kpi-card" data-kpi-card="moments">
-                    <span class="kpi-label">오늘 관찰</span>
-                    <strong data-counter data-kpi="moments" data-target="128">0</strong>
-                    <span class="delta-badge">+1</span>
-                  </article>
-                  <article class="kpi-card" data-kpi-card="requests">
-                    <span class="kpi-label">AI 분류</span>
-                    <strong data-counter data-kpi="requests" data-target="37">0</strong>
-                    <span class="delta-badge">+1</span>
-                  </article>
-                  <article class="kpi-card" data-kpi-card="confirmed">
-                    <span class="kpi-label">재확인</span>
-                    <strong data-counter data-kpi="confirmed" data-target="18">0</strong>
-                    <span class="delta-badge">+1</span>
-                  </article>
-                </div>
+                <div class="class-dashboard-body">
+                  <div class="class-focus-kpis" aria-label="우리반 핵심 지표">
+                    <article class="kpi-card ai-focus" data-kpi-card="requests">
+                      <span class="kpi-label">AI 1차 분류</span>
+                      <strong data-counter data-kpi="requests" data-target="37">0</strong>
+                      <span class="delta-badge">+1</span>
+                    </article>
+                    <article class="kpi-card confirm-focus" data-kpi-card="confirmed">
+                      <span class="kpi-label">학생 재확인</span>
+                      <strong data-counter data-kpi="confirmed" data-target="31">0</strong>
+                      <span class="delta-badge">+1</span>
+                    </article>
+                  </div>
 
-                <p class="rank-summary">학년 내 1위 · 학교 내 2위 · DEMO RANKING</p>
+                  <div class="class-mini-kpis" aria-label="우리반 보조 지표">
+                    <span data-kpi-card="moments"><strong data-counter data-kpi="moments" data-target="42">0</strong>오늘 관찰<i>+1</i></span>
+                    <span data-kpi-card="held"><strong data-counter data-kpi="held" data-target="7">0</strong>판단 보류<i>+1</i></span>
+                    <span data-kpi-card="converted"><strong data-counter data-kpi="converted" data-target="24">0</strong>전환 사례<i>+1</i></span>
+                  </div>
+
+                  <div class="class-insights">
+                    <article class="class-mini-chart confused-chart">
+                      <h3>헷갈린 물건 TOP 5</h3>
+                      <ul>
+                        <li style="--value: 12"><span>우유갑</span><strong>12</strong></li>
+                        <li style="--value: 9"><span>구겨진 종이</span><strong>9</strong></li>
+                        <li style="--value: 8"><span>과자봉지</span><strong>8</strong></li>
+                        <li style="--value: 5"><span>플라스틱컵</span><strong>5</strong></li>
+                        <li style="--value: 3"><span>빨대</span><strong>3</strong></li>
+                      </ul>
+                    </article>
+
+                    <article class="class-mini-chart ratio-chart">
+                      <h3>분류 판단 비율</h3>
+                      <div class="segmented-ratio" aria-label="종이류 36%, 플라스틱 24%, 비닐류 17%, 일반쓰레기 14%, 판단 보류 9%">
+                        <span class="paper" style="--share: 36%"></span>
+                        <span class="plastic" style="--share: 24%"></span>
+                        <span class="vinyl" style="--share: 17%"></span>
+                        <span class="trash" style="--share: 14%"></span>
+                        <span class="hold" style="--share: 9%"></span>
+                      </div>
+                      <p>종이류 36 · 플라스틱 24 · 비닐류 17 · 일반 14 · 보류 9</p>
+                    </article>
+                  </div>
+
+                  <a class="rank-summary" href="#ranking" data-rank-preview aria-describedby="rankTooltip">
+                    <span>우리반 참여 랭킹</span>
+                    <strong>학년 내 1위 · 학교 내 2위</strong>
+                    <em>랭킹 보기</em>
+                  </a>
+                  <span class="rank-tooltip" id="rankTooltip" role="tooltip">
+                    수업용 랭킹 시뮬레이션입니다. 클릭하면 전체 랭킹을 확인할 수 있습니다.
+                  </span>
+                </div>
               </section>
 
               <section class="landfill-monitor glass-panel" aria-labelledby="landfill-title">
@@ -263,7 +317,7 @@
         </div>
       </section>
 
-      <section class="section-shell project-frame" id="project-frame">
+      <section class="section-shell project-frame story-section" id="project-frame">
         <div class="project-frame-inner">
           <p class="eyebrow">Project Frame</p>
           <h2>
@@ -275,7 +329,7 @@
         </div>
       </section>
 
-      <section class="section-shell" id="curriculum">
+      <section class="section-shell story-section" id="curriculum">
         <div class="section-header">
           <p class="eyebrow">Curriculum Design</p>
           <h2>교육과정 기반 수업 설계</h2>
@@ -323,7 +377,7 @@
         </div>
       </section>
 
-      <section class="section-shell" id="hah">
+      <section class="section-shell story-section" id="hah">
         <div class="section-header">
           <p class="eyebrow">Human-AI-Human</p>
           <h2>Human-AI-Human 수업 모델</h2>
@@ -370,7 +424,7 @@
         </p>
       </section>
 
-      <section class="section-shell" id="journey">
+      <section class="section-shell story-section" id="journey">
         <div class="section-header">
           <p class="eyebrow">6 Lessons</p>
           <h2>6차시 수업 여정</h2>
@@ -436,7 +490,7 @@
         </div>
       </section>
 
-      <section class="section-shell" id="quick-app">
+      <section class="section-shell story-section" id="quick-app">
         <div class="tool-grid">
           <div class="section-header compact-header">
             <p class="eyebrow">3-Second Check</p>
@@ -467,7 +521,7 @@
         </div>
       </section>
 
-      <section class="section-shell" id="hold">
+      <section class="section-shell story-section" id="hold">
         <div class="qr-grid">
           <div class="section-header compact-header">
             <p class="eyebrow">Deferred Judgment</p>
@@ -490,7 +544,7 @@
         </div>
       </section>
 
-      <section class="section-shell" id="outputs">
+      <section class="section-shell story-section" id="outputs">
         <div class="section-header">
           <p class="eyebrow">Student Outputs</p>
           <h2>학생 산출물 갤러리</h2>
@@ -507,7 +561,29 @@
         </div>
       </section>
 
-      <section class="section-shell" id="playbook">
+      <section class="section-shell story-section ranking-section" id="ranking">
+        <div class="section-header">
+          <p class="eyebrow">Class Ranking</p>
+          <h2>5학년 1반 자원순환 랭킹</h2>
+          <p>우리반의 배출 관찰과 AI 분류 실천을 학교·지역 단위로 비교합니다.</p>
+        </div>
+
+        <div class="ranking-board">
+          <div class="ranking-tabs" role="tablist" aria-label="랭킹 범위 선택">
+            <button class="is-active" type="button" role="tab" aria-selected="true" data-ranking-tab="class">우리반</button>
+            <button type="button" role="tab" aria-selected="false" data-ranking-tab="grade">우리학년</button>
+            <button type="button" role="tab" aria-selected="false" data-ranking-tab="school">우리학교</button>
+            <button type="button" role="tab" aria-selected="false" data-ranking-tab="dong">우리동</button>
+            <button type="button" role="tab" aria-selected="false" data-ranking-tab="gu">우리구</button>
+            <button type="button" role="tab" aria-selected="false" data-ranking-tab="incheon">인천</button>
+          </div>
+
+          <div class="ranking-list" id="rankingList" aria-live="polite"></div>
+          <p class="ranking-note">수업용 더미데이터이며 실제 데이터 연결 전까지 시뮬레이션으로 표시됩니다.</p>
+        </div>
+      </section>
+
+      <section class="section-shell story-section" id="playbook">
         <div class="section-header">
           <p class="eyebrow">Resources</p>
           <h2>PLAY BOOK &amp; 자료실</h2>

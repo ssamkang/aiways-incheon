@@ -48,6 +48,40 @@ const itemData = {
 
 const metricValues = {};
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rankingData = {
+  class: [
+    { title: "5학년 1반", meta: "1위 / 42건", highlight: true },
+    { title: "5학년 2반", meta: "2위 / 36건" },
+    { title: "5학년 3반", meta: "3위 / 31건" },
+    { title: "5학년 4반", meta: "4위 / 28건" },
+  ],
+  grade: [
+    { title: "5학년", meta: "1위 / 112건", highlight: true },
+    { title: "6학년", meta: "2위 / 96건" },
+    { title: "4학년", meta: "3위 / 58건" },
+    { title: "3학년", meta: "4위 / 46건" },
+  ],
+  school: [
+    { title: "우리학교", meta: "학교 내 2위 학급 보유 / 참여 학급 14개", highlight: true },
+    { title: "5학년 1반", meta: "최다 AI 분류 참여", highlight: true },
+    { title: "판단 보류 개선률", meta: "18% 감소" },
+  ],
+  dong: [
+    { title: "우리학교", meta: "7위", highlight: true },
+    { title: "동 평균 참여 지수", meta: "74" },
+    { title: "우리학교 참여 지수", meta: "86", highlight: true },
+  ],
+  gu: [
+    { title: "우리학교", meta: "12위", highlight: true },
+    { title: "구 평균 참여 지수", meta: "68" },
+    { title: "우리학교 참여 지수", meta: "86", highlight: true },
+  ],
+  incheon: [
+    { title: "우리학교", meta: "48위", highlight: true },
+    { title: "인천 참여 학교 더미", meta: "126개" },
+    { title: "우리반 데이터", meta: "확산 준비 중" },
+  ],
+};
 
 let selectedFile = null;
 let currentItemKey = "paper";
@@ -56,10 +90,13 @@ let recordFinalized = false;
 let loadingTimer = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+  bindIntroOverlay();
+  prepareStorySections();
   initializeCounters();
   bindScrollButtons();
   bindAnchorNavigation();
-  bindSectionScroller();
+  bindStoryProgress();
+  bindRankingTabs();
   bindUploadDemo();
   bindResultActions();
   bindQuickApp();
@@ -119,7 +156,7 @@ function smoothScrollToTarget(selector) {
     return;
   }
 
-  animateScrollTo(window.scrollY + target.getBoundingClientRect().top, 1080);
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function appleEase(progress) {
@@ -170,76 +207,115 @@ function animateScrollTo(targetY, duration) {
   requestAnimationFrame(step);
 }
 
-function bindSectionScroller() {
-  if (prefersReducedMotion) return;
+function bindIntroOverlay() {
+  const overlay = document.querySelector("#introOverlay");
+  const skipButton = document.querySelector("#skipIntro");
+  if (!overlay) return;
 
-  const sections = [...document.querySelectorAll("main > .section-shell")];
-  if (!sections.length) return;
+  const closeIntro = () => {
+    overlay.classList.add("is-done");
+    document.documentElement.classList.add("intro-finished");
+  };
 
-  let isLocked = false;
-  let wheelDelta = 0;
+  skipButton?.addEventListener("click", closeIntro);
 
-  function currentSectionIndex() {
-    const pivot = window.scrollY + window.innerHeight * 0.48;
-    return sections.reduce((closestIndex, section, index) => {
-      const sectionTop = section.offsetTop;
-      const closestTop = sections[closestIndex].offsetTop;
-      return Math.abs(sectionTop - pivot) < Math.abs(closestTop - pivot)
-        ? index
-        : closestIndex;
-    }, 0);
+  if (prefersReducedMotion) {
+    window.setTimeout(closeIntro, 420);
+    return;
   }
 
-  window.addEventListener(
-    "wheel",
-    (event) => {
-      if (window.innerWidth < 1180 || event.ctrlKey) return;
-      if (event.target.closest("input, textarea, select")) return;
+  window.setTimeout(closeIntro, 4800);
+}
 
-      if (isLocked) {
-        event.preventDefault();
-        return;
-      }
-
-      wheelDelta += event.deltaY;
-      if (Math.abs(wheelDelta) < 170) return;
-
-      event.preventDefault();
-      const direction = wheelDelta > 0 ? 1 : -1;
-      wheelDelta = 0;
-
-      const nextIndex = Math.max(0, Math.min(sections.length - 1, currentSectionIndex() + direction));
-      isLocked = true;
-      animateScrollTo(sections[nextIndex].offsetTop, 1120);
-      window.setTimeout(() => {
-        isLocked = false;
-      }, 1240);
-    },
-    { passive: false }
-  );
-
-  window.addEventListener("keydown", (event) => {
-    if (window.innerWidth < 1180 || event.target.closest("input, textarea, select")) return;
-    const keyMap = { PageDown: 1, ArrowDown: 1, PageUp: -1, ArrowUp: -1 };
-    if (event.key === "Home") {
-      event.preventDefault();
-      smoothScrollToTarget(`#${sections[0].id}`);
-      return;
+function prepareStorySections() {
+  document.querySelectorAll("main > .story-section:not(.hero-story)").forEach((section) => {
+    if (section.querySelector(":scope > .sticky-stage")) return;
+    const stage = document.createElement("div");
+    stage.className = "sticky-stage";
+    while (section.firstChild) {
+      stage.appendChild(section.firstChild);
     }
-    if (event.key === "End") {
-      event.preventDefault();
-      smoothScrollToTarget(`#${sections[sections.length - 1].id}`);
-      return;
-    }
-    if (!(event.key in keyMap) || isLocked) return;
-    event.preventDefault();
-    const nextIndex = Math.max(0, Math.min(sections.length - 1, currentSectionIndex() + keyMap[event.key]));
-    isLocked = true;
-    animateScrollTo(sections[nextIndex].offsetTop, 1080);
-    window.setTimeout(() => {
-      isLocked = false;
-    }, 1200);
+    section.appendChild(stage);
   });
+}
+
+function bindStoryProgress() {
+  const sections = [...document.querySelectorAll(".story-section")];
+  if (!sections.length) return;
+
+  let metrics = [];
+  let ticking = false;
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function measure() {
+    metrics = sections.map((section) => ({
+      section,
+      top: section.offsetTop,
+      height: section.offsetHeight,
+    }));
+    update();
+  }
+
+  function update() {
+    const scrollY = window.scrollY;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+    metrics.forEach(({ section, top, height }) => {
+      const travel = Math.max(1, height - viewportHeight);
+      const progress = clamp((scrollY - top) / travel, 0, 1);
+      section.style.setProperty("--progress", progress.toFixed(4));
+      section.classList.toggle("is-in-view", progress > 0.02 && progress < 0.98);
+    });
+
+    ticking = false;
+  }
+
+  function requestUpdate() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }
+
+  measure();
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", measure);
+}
+
+function bindRankingTabs() {
+  const list = document.querySelector("#rankingList");
+  const buttons = document.querySelectorAll("[data-ranking-tab]");
+  if (!list || !buttons.length) return;
+
+  function renderRanking(key) {
+    const rows = rankingData[key] || rankingData.class;
+    list.innerHTML = rows
+      .map(
+        (row, index) => `
+          <article class="${row.highlight ? "is-highlighted" : ""}">
+            <span>${String(index + 1).padStart(2, "0")}</span>
+            <strong>${row.title}</strong>
+            <em>${row.meta}</em>
+          </article>
+        `
+      )
+      .join("");
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((tabButton) => {
+        const isActive = tabButton === button;
+        tabButton.classList.toggle("is-active", isActive);
+        tabButton.setAttribute("aria-selected", String(isActive));
+      });
+      renderRanking(button.dataset.rankingTab);
+    });
+  });
+
+  renderRanking("class");
 }
 
 function bindUploadDemo() {
