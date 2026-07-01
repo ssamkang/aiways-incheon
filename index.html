@@ -8,10 +8,10 @@
       name="description"
       content="AI와 데이터로 실천하는 학교 자원순환 UX 개선 프로젝트 대시보드"
     />
-    <link rel="stylesheet" href="./style.css?v=motion-class-dashboard" />
-    <script defer src="./script.js?v=motion-class-dashboard"></script>
+    <link rel="stylesheet" href="./style.css?v=reference-hero" />
+    <script defer src="./script.js?v=reference-hero"></script>
   </head>
-  <body>
+  <body class="page">
     <a class="skip-link" href="#project">본문 바로가기</a>
 
     <div class="intro-overlay" id="introOverlay" aria-label="AI Ways Incheon intro animation">
@@ -33,8 +33,8 @@
       </div>
     </div>
 
-    <header class="site-header">
-      <nav class="site-nav" aria-label="주요 메뉴">
+    <header class="site-header header">
+      <nav class="site-nav nav" aria-label="주요 메뉴">
         <a class="brand" href="#project" aria-label="AIWays Incheon 홈">
           <span class="brand-mark" aria-hidden="true">
             <img src="./aiways-logo.png" alt="" decoding="async" />
@@ -55,9 +55,9 @@
     </header>
 
     <main>
-      <section class="hero section-shell control-hero story-section hero-story" id="project">
+      <section class="hero section-shell control-hero story-section hero-story main" id="project">
         <div class="control-hero-grid sticky-stage">
-          <div class="hero-copy-block control-copy">
+          <div class="hero-copy-block control-copy copy">
             <p class="eyebrow">학생의 버리는 순간을 읽는 자원순환 분석 엔진</p>
             <h1>
               <span>버리는 순간,</span>
@@ -70,7 +70,7 @@
               <span>우리 학교의 자원순환 UX를 개선하는 H-A-H 기반 수업 프로젝트입니다.</span>
             </p>
 
-            <div class="hero-actions" aria-label="주요 이동 버튼">
+            <div class="hero-actions actions" aria-label="주요 이동 버튼">
               <button class="primary-action" type="button" data-scroll="#demo-card">
                 지금 분류하기
               </button>
@@ -94,9 +94,9 @@
             </div>
           </div>
 
-          <div class="control-stage" aria-label="AI Ways Incheon first screen dashboard">
+          <div class="control-stage dash" aria-label="AI Ways Incheon first screen dashboard">
             <div class="control-stage-grid">
-              <section class="school-dashboard glass-panel dashboard-card" aria-labelledby="school-dashboard-title">
+              <section class="school-dashboard glass-panel dashboard-card card" aria-labelledby="school-dashboard-title">
                 <div class="panel-head">
                   <div>
                     <p class="panel-kicker">School Resource Dashboard</p>
@@ -106,25 +106,25 @@
                 </div>
 
                 <div class="school-dashboard-body">
-                  <div class="compact-kpi-grid">
-                    <span><strong>312</strong>배출 관찰</span>
-                    <span><strong>14</strong>참여 학급</span>
-                    <span><strong>21</strong>판단 보류</span>
+                  <div class="compact-kpi-grid kpis">
+                    <span class="kpi"><strong>312</strong>배출 관찰</span>
+                    <span class="kpi"><strong>14</strong>참여 학급</span>
+                    <span class="kpi"><strong>21</strong>판단 보류</span>
                   </div>
 
                   <article class="compact-chart">
                     <h3>학년별 참여</h3>
                     <ul class="grade-bars">
-                      <li style="--value: 46"><span>3학년</span><strong>46</strong></li>
-                      <li style="--value: 58"><span>4학년</span><strong>58</strong></li>
-                      <li style="--value: 112"><span>5학년</span><strong>112</strong></li>
-                      <li style="--value: 96"><span>6학년</span><strong>96</strong></li>
+                      <li class="bar" style="--value: 46"><span>3학년</span><strong>46</strong></li>
+                      <li class="bar" style="--value: 58"><span>4학년</span><strong>58</strong></li>
+                      <li class="bar" style="--value: 112"><span>5학년</span><strong>112</strong></li>
+                      <li class="bar" style="--value: 96"><span>6학년</span><strong>96</strong></li>
                     </ul>
                   </article>
                 </div>
               </section>
 
-              <section class="dashboard-panel class-dashboard" aria-labelledby="dashboard-title">
+              <section class="dashboard-panel class-dashboard card" aria-labelledby="dashboard-title">
                 <div class="panel-head">
                   <div>
                     <p class="panel-kicker">Class Resource Dashboard</p>
@@ -137,34 +137,34 @@
                 </div>
 
                 <div class="class-dashboard-body">
-                  <div class="class-focus-kpis" aria-label="우리반 핵심 지표">
-                    <article class="kpi-card ai-focus" data-kpi-card="requests">
+                  <div class="class-focus-kpis kpis" aria-label="우리반 핵심 지표">
+                    <article class="kpi-card kpi ai-focus" data-kpi-card="requests">
                       <span class="kpi-label">AI 1차 분류</span>
                       <strong data-counter data-kpi="requests" data-target="37">0</strong>
                       <span class="delta-badge">+1</span>
                     </article>
-                    <article class="kpi-card confirm-focus" data-kpi-card="confirmed">
+                    <article class="kpi-card kpi confirm-focus" data-kpi-card="confirmed">
                       <span class="kpi-label">학생 재확인</span>
                       <strong data-counter data-kpi="confirmed" data-target="31">0</strong>
                       <span class="delta-badge">+1</span>
                     </article>
                   </div>
 
-                  <div class="class-mini-kpis" aria-label="우리반 보조 지표">
-                    <span data-kpi-card="moments"><strong data-counter data-kpi="moments" data-target="42">0</strong>오늘 관찰<i>+1</i></span>
-                    <span data-kpi-card="held"><strong data-counter data-kpi="held" data-target="7">0</strong>판단 보류<i>+1</i></span>
-                    <span data-kpi-card="converted"><strong data-counter data-kpi="converted" data-target="24">0</strong>전환 사례<i>+1</i></span>
+                  <div class="class-mini-kpis kpis" aria-label="우리반 보조 지표">
+                    <span class="kpi" data-kpi-card="moments"><strong data-counter data-kpi="moments" data-target="42">0</strong>오늘 관찰<i>+1</i></span>
+                    <span class="kpi" data-kpi-card="held"><strong data-counter data-kpi="held" data-target="7">0</strong>판단 보류<i>+1</i></span>
+                    <span class="kpi" data-kpi-card="converted"><strong data-counter data-kpi="converted" data-target="24">0</strong>전환 사례<i>+1</i></span>
                   </div>
 
                   <div class="class-insights">
                     <article class="class-mini-chart confused-chart">
                       <h3>헷갈린 물건 TOP 5</h3>
                       <ul>
-                        <li style="--value: 12"><span>우유갑</span><strong>12</strong></li>
-                        <li style="--value: 9"><span>구겨진 종이</span><strong>9</strong></li>
-                        <li style="--value: 8"><span>과자봉지</span><strong>8</strong></li>
-                        <li style="--value: 5"><span>플라스틱컵</span><strong>5</strong></li>
-                        <li style="--value: 3"><span>빨대</span><strong>3</strong></li>
+                        <li class="bar" style="--value: 12"><span>우유갑</span><strong>12</strong></li>
+                        <li class="bar" style="--value: 9"><span>구겨진 종이</span><strong>9</strong></li>
+                        <li class="bar" style="--value: 8"><span>과자봉지</span><strong>8</strong></li>
+                        <li class="bar" style="--value: 5"><span>플라스틱컵</span><strong>5</strong></li>
+                        <li class="bar" style="--value: 3"><span>빨대</span><strong>3</strong></li>
                       </ul>
                     </article>
 
@@ -192,7 +192,7 @@
                 </div>
               </section>
 
-              <section class="landfill-monitor glass-panel" aria-labelledby="landfill-title">
+              <section class="landfill-monitor glass-panel card" aria-labelledby="landfill-title">
                 <div class="panel-head compact">
                   <div>
                     <p class="panel-kicker">DEMO · 공식 관리 지표 구조 참고</p>
@@ -201,14 +201,14 @@
                   <span class="monitor-orbit" aria-hidden="true"></span>
                 </div>
                 <p>공식 반입량 관리 구조에서 착안한 수업용 프로토타입</p>
-                <div class="landfill-metrics">
-                  <span><strong>18,420t</strong>생활폐기물 반입량</span>
-                  <span><strong>-2.8%</strong>전일 대비</span>
-                  <span><strong>63.4%</strong>총량 대비 반입률</span>
-                  <span><strong>36.6%</strong>잔여 관리 여력</span>
+                <div class="landfill-metrics kpis">
+                  <span class="kpi"><strong>18,420t</strong>생활폐기물 반입량</span>
+                  <span class="kpi"><strong>-2.8%</strong>전일 대비</span>
+                  <span class="kpi"><strong>63.4%</strong>총량 대비 반입률</span>
+                  <span class="kpi"><strong>36.6%</strong>잔여 관리 여력</span>
                 </div>
                 <div class="landfill-visuals">
-                  <svg viewBox="0 0 260 86" aria-hidden="true">
+                  <svg class="line" viewBox="0 0 260 86" aria-hidden="true">
                     <path class="spark-fill" d="M8 27 48 40 88 34 128 52 168 45 208 63 252 70 252 82H8z" />
                     <path class="spark-line" d="M8 27 48 40 88 34 128 52 168 45 208 63 252 70" />
                   </svg>
@@ -228,7 +228,7 @@
                 </div>
               </section>
 
-              <section class="upload-panel control-upload" id="demo-card" aria-labelledby="demo-title">
+              <section class="upload-panel control-upload card" id="demo-card" aria-labelledby="demo-title">
                 <div class="panel-head compact">
                 <div>
                   <p class="panel-kicker">H-A-H Demo Module</p>
@@ -240,8 +240,8 @@
               </p>
 
               <input class="visually-hidden" id="imageUpload" type="file" accept="image/*" />
-              <label class="upload-drop" id="dropZone" for="imageUpload">
-                <span class="upload-symbol" aria-hidden="true">+</span>
+              <label class="upload-drop upload-box" id="dropZone" for="imageUpload">
+                <span class="upload-symbol plus" aria-hidden="true">+</span>
                 <span>
                   <strong>사진 업로드</strong>
                   <small>큐시트 종이를 구겨 올리는 발표 시연</small>
