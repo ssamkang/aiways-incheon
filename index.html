@@ -8,8 +8,8 @@
       name="description"
       content="AI와 데이터로 실천하는 학교 자원순환 UX 개선 프로젝트 대시보드"
     />
-    <link rel="stylesheet" href="./style.css?v=first-screen-refine" />
-    <script defer src="./script.js?v=first-screen-refine"></script>
+    <link rel="stylesheet" href="./style.css?v=clean-dashboard-hero" />
+    <script defer src="./script.js?v=clean-dashboard-hero"></script>
   </head>
   <body>
     <a class="skip-link" href="#project">본문 바로가기</a>
@@ -82,23 +82,19 @@
                   <div>
                     <p class="panel-kicker">School Resource Dashboard</p>
                     <h2 id="school-dashboard-title">우리학교 자원순환 대시보드</h2>
-                    <p class="panel-copy">
-                      학교 전체의 배출 관찰 데이터를 모아 우리반의 실천을 비교합니다.
-                    </p>
                   </div>
                   <span class="sync-chip">DEMO · 수업용 데이터</span>
                 </div>
 
                 <div class="school-dashboard-body">
                   <div class="compact-kpi-grid">
-                    <span><strong>312</strong>오늘 학교 배출 관찰</span>
+                    <span><strong>312</strong>배출 관찰</span>
                     <span><strong>14</strong>참여 학급</span>
                     <span><strong>21</strong>판단 보류</span>
-                    <span><strong>68</strong>자원순환 전환</span>
                   </div>
 
                   <article class="compact-chart">
-                    <h3>학년별 참여 데이터</h3>
+                    <h3>학년별 참여</h3>
                     <ul class="grade-bars">
                       <li style="--value: 46"><span>3학년</span><strong>46</strong></li>
                       <li style="--value: 58"><span>4학년</span><strong>58</strong></li>
@@ -123,50 +119,23 @@
 
                 <div class="kpi-grid class-kpi-grid" aria-label="5학년 1반 자원순환 지표">
                   <article class="kpi-card" data-kpi-card="moments">
-                    <span class="kpi-label">오늘 배출 관찰</span>
+                    <span class="kpi-label">오늘 관찰</span>
                     <strong data-counter data-kpi="moments" data-target="128">0</strong>
                     <span class="delta-badge">+1</span>
                   </article>
                   <article class="kpi-card" data-kpi-card="requests">
-                    <span class="kpi-label">AI 1차 분류</span>
+                    <span class="kpi-label">AI 분류</span>
                     <strong data-counter data-kpi="requests" data-target="37">0</strong>
                     <span class="delta-badge">+1</span>
                   </article>
                   <article class="kpi-card" data-kpi-card="confirmed">
-                    <span class="kpi-label">학생 재확인</span>
+                    <span class="kpi-label">재확인</span>
                     <strong data-counter data-kpi="confirmed" data-target="18">0</strong>
                     <span class="delta-badge">+1</span>
                   </article>
-                  <article class="kpi-card" data-kpi-card="held">
-                    <span class="kpi-label">판단 보류</span>
-                    <strong data-counter data-kpi="held" data-target="7">0</strong>
-                    <span class="delta-badge">+1</span>
-                  </article>
-                  <article class="kpi-card" data-kpi-card="converted">
-                    <span class="kpi-label">전환 사례</span>
-                    <strong data-counter data-kpi="converted" data-target="24">0</strong>
-                    <span class="delta-badge">+1</span>
-                  </article>
                 </div>
 
-                <div class="dashboard-analytics" aria-label="우리반 분석 그래프">
-                  <article class="chart-card bar-card">
-                    <h3>헷갈린 물건 TOP 5</h3>
-                    <ul class="bar-list">
-                      <li style="--value: 32"><span>우유갑</span><strong>32</strong></li>
-                      <li style="--value: 24"><span>구겨진 종이</span><strong>24</strong></li>
-                      <li style="--value: 18"><span>과자봉지</span><strong>18</strong></li>
-                      <li style="--value: 14"><span>플라스틱컵</span><strong>14</strong></li>
-                      <li style="--value: 9"><span>빨대</span><strong>9</strong></li>
-                    </ul>
-                  </article>
-
-                  <article class="chart-card rank-card compact-rank-card">
-                    <h3>5학년 1반 참여 순위</h3>
-                    <strong>학년 내 1위 / 학교 내 2위</strong>
-                    <span>DEMO RANKING · 수업용 순위 시뮬레이션</span>
-                  </article>
-                </div>
+                <p class="rank-summary">학년 내 1위 · 학교 내 2위 · DEMO RANKING</p>
               </section>
 
               <section class="landfill-monitor glass-panel" aria-labelledby="landfill-title">
@@ -189,6 +158,10 @@
                     <path class="spark-fill" d="M8 27 48 40 88 34 128 52 168 45 208 63 252 70 252 82H8z" />
                     <path class="spark-line" d="M8 27 48 40 88 34 128 52 168 45 208 63 252 70" />
                   </svg>
+                  <div class="landfill-progress-list" aria-label="매립지 관리 지표 진행률">
+                    <span><em>총량 대비 반입률</em><strong>63.4%</strong><i style="width: 63.4%"></i></span>
+                    <span><em>잔여 관리 여력</em><strong>36.6%</strong><i style="width: 36.6%"></i></span>
+                  </div>
                   <ul class="spark-labels" aria-label="최근 7일 반입량">
                     <li>월 <strong>19,100</strong></li>
                     <li>화 <strong>18,760</strong></li>
@@ -198,10 +171,6 @@
                     <li>토 <strong>17,880</strong></li>
                     <li>일 <strong>17,540</strong></li>
                   </ul>
-                  <div class="mini-ring" aria-label="총량 대비 반입률 63.4%"><span>63.4%</span></div>
-                  <div class="capacity-bar" aria-label="잔여 관리 여력 36.6%">
-                    <span style="width: 36.6%"></span>
-                  </div>
                 </div>
               </section>
 
@@ -221,7 +190,7 @@
                 <span class="upload-symbol" aria-hidden="true">+</span>
                 <span>
                   <strong>사진 업로드</strong>
-                  <small>큐시트 종이를 구겨 올리면 발표 시연이 시작됩니다.</small>
+                  <small>큐시트 종이를 구겨 올리는 발표 시연</small>
                 </span>
               </label>
 
