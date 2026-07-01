@@ -331,6 +331,10 @@
   function patchUploadCard() {
     const card = $(".upload-card");
     if (!card) return;
+    if ($(".cx-app", card)) {
+      card.classList.add("awx-live-card");
+      return;
+    }
 
     const title = $("h2", card);
     if (title) title.textContent = "버려지는 순간을 기록하세요";
