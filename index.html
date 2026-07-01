@@ -8,8 +8,8 @@
       name="description"
       content="AI와 데이터로 실천하는 학교 자원순환 UX 개선 프로젝트 대시보드"
     />
-    <link rel="stylesheet" href="./style.css?v=control-map" />
-    <script defer src="./script.js?v=control-map"></script>
+    <link rel="stylesheet" href="./style.css?v=first-screen-refine" />
+    <script defer src="./script.js?v=first-screen-refine"></script>
   </head>
   <body>
     <a class="skip-link" href="#project">본문 바로가기</a>
@@ -31,9 +31,7 @@
           <a href="#outputs">산출물</a>
         </div>
 
-        <button class="nav-cta" type="button" data-scroll="#demo-card">
-          실시간 시연 시작
-        </button>
+        <button class="nav-cta" type="button" data-scroll="#demo-card">지금 분류하기</button>
       </nav>
     </header>
 
@@ -47,15 +45,15 @@
               <span class="title-nowrap">데이터가 되다</span>
             </h1>
             <p class="hero-lead">
-              AI Ways Incheon은 환경 포스터를 만드는 수업이 아닙니다. 학생들이 실제로
-              쓰레기를 버리는 순간을 관찰하고, AI와 데이터로 1차 판단한 뒤,
-              인간중심 기준으로 다시 확인하여 학교 자원순환 UX를 개선하는 H-A-H 기반
-              수업 프로젝트입니다.
+              <span>AIWays Incheon은 환경 포스터를 만드는 수업이 아닙니다.</span>
+              <span>우리가 실제로 쓰레기를 버리는 순간을 관찰하고,</span>
+              <span>AI를 통해 데이터를 1차 판단한 뒤 사람이 중심이 되어 다시 확인하는,</span>
+              <span>우리 학교의 자원순환 UX를 개선하는 H-A-H 기반 수업 프로젝트입니다.</span>
             </p>
 
             <div class="hero-actions" aria-label="주요 이동 버튼">
               <button class="primary-action" type="button" data-scroll="#demo-card">
-                지금 시연하기
+                지금 분류하기
               </button>
               <button class="secondary-action" type="button" data-scroll="#curriculum">
                 수업 설계 보기
@@ -77,123 +75,36 @@
             </div>
           </div>
 
-          <div class="control-stage" aria-label="AI Ways Incheon Control Map">
-            <div class="control-stage-head">
-              <div>
-                <p class="panel-kicker">AI Ways Incheon Control Map</p>
-                <h2>인천 자원순환 관제 지도</h2>
-              </div>
-              <form class="map-search" id="mapSearch" role="search">
-                <label class="visually-hidden" for="mapSearchInput">관제 지도 검색</label>
-                <input
-                  id="mapSearchInput"
-                  type="search"
-                  autocomplete="off"
-                  placeholder="우리학교, 5학년 1반, 수도권매립지 검색"
-                />
-                <button type="submit">검색</button>
-              </form>
-            </div>
-
+          <div class="control-stage" aria-label="AI Ways Incheon first screen dashboard">
             <div class="control-stage-grid">
-              <section class="map-panel glass-panel" aria-labelledby="map-title">
-                <div class="panel-head compact">
+              <section class="school-dashboard glass-panel dashboard-card" aria-labelledby="school-dashboard-title">
+                <div class="panel-head">
                   <div>
-                    <p class="panel-kicker">2.5D Incheon Map</p>
-                    <h2 id="map-title">교실에서 인천까지 이어지는 데이터 흐름</h2>
+                    <p class="panel-kicker">School Resource Dashboard</p>
+                    <h2 id="school-dashboard-title">우리학교 자원순환 대시보드</h2>
+                    <p class="panel-copy">
+                      학교 전체의 배출 관찰 데이터를 모아 우리반의 실천을 비교합니다.
+                    </p>
                   </div>
-                  <span class="sync-chip">DEMO MAP</span>
+                  <span class="sync-chip">DEMO · 수업용 데이터</span>
                 </div>
 
-                <div class="map-canvas" aria-label="인천 자원순환 관제 지도">
-                  <svg class="incheon-map-art" viewBox="0 0 900 560" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="landGlow" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stop-color="#284873" />
-                        <stop offset="0.55" stop-color="#13283f" />
-                        <stop offset="1" stop-color="#0a1727" />
-                      </linearGradient>
-                      <linearGradient id="bridgeGlow" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0" stop-color="#65f3d5" />
-                        <stop offset="0.52" stop-color="#55a7ff" />
-                        <stop offset="1" stop-color="#a986ff" />
-                      </linearGradient>
-                      <filter id="softGlow">
-                        <feGaussianBlur stdDeviation="5" result="blur" />
-                        <feMerge>
-                          <feMergeNode in="blur" />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    </defs>
-                    <path
-                      class="sea-field"
-                      d="M0 0H900V560H0z"
-                    />
-                    <path
-                      class="incheon-land"
-                      d="M385 72c66 8 111 42 146 93 25 37 84 43 120 72 40 33 50 88 18 130-33 43-90 42-142 34-48-7-91 9-134 31-61 31-126 22-166-18-36-36-23-92 16-123 31-25 33-66 51-104 18-38 43-106 91-115z"
-                    />
-                    <path
-                      class="district-line"
-                      d="M318 210c89-18 163 12 242 74M278 334c83-47 173-57 284-29M410 110c-20 89 15 164 74 252"
-                    />
-                    <path
-                      class="bridge-line"
-                      d="M96 408C198 319 304 286 418 298c116 12 185 78 300 52"
-                    />
-                    <path
-                      class="bridge-track"
-                      d="M96 408C198 319 304 286 418 298c116 12 185 78 300 52"
-                    />
-                    <path
-                      class="data-flow-line"
-                      d="M448 306C358 286 300 250 242 214"
-                    />
-                    <path
-                      class="airport-route"
-                      d="M708 186C642 206 594 234 548 286"
-                    />
-                    <g class="plane-mark" filter="url(#softGlow)">
-                      <path d="M0-9 28 0 0 9 6 1-18 1-18-1 6-1z" />
-                    </g>
-                    <path
-                      class="wave-line wave-a"
-                      d="M48 138c46-24 90-24 132 0s84 24 126 0 83-24 124 0"
-                    />
-                    <path
-                      class="wave-line wave-b"
-                      d="M530 472c41-18 78-18 116 0s75 18 112 0 71-18 106 0"
-                    />
-                  </svg>
+                <div class="school-dashboard-body">
+                  <div class="compact-kpi-grid">
+                    <span><strong>312</strong>오늘 학교 배출 관찰</span>
+                    <span><strong>14</strong>참여 학급</span>
+                    <span><strong>21</strong>판단 보류</span>
+                    <span><strong>68</strong>자원순환 전환</span>
+                  </div>
 
-                  <button class="map-hotspot hotspot-school is-active" type="button" data-hotspot="school">
-                    <span></span>우리학교
-                  </button>
-                  <button class="map-hotspot hotspot-class" type="button" data-hotspot="class">
-                    <span></span>5학년 1반
-                  </button>
-                  <button class="map-hotspot hotspot-landfill" type="button" data-hotspot="landfill">
-                    <span></span>수도권매립지
-                  </button>
-                  <button class="map-hotspot hotspot-bridge" type="button" data-hotspot="bridge">
-                    <span></span>인천대교
-                  </button>
-                  <button class="map-hotspot hotspot-airport" type="button" data-hotspot="airport">
-                    <span></span>인천공항
-                  </button>
-                  <button class="map-hotspot hotspot-gu" type="button" data-hotspot="gu">
-                    <span></span>우리구
-                  </button>
-                  <button class="map-hotspot hotspot-dong" type="button" data-hotspot="dong">
-                    <span></span>우리동
-                  </button>
-
-                  <article class="hotspot-detail" id="hotspotDetail" aria-live="polite">
-                    <span class="detail-chip">FOCUS NODE</span>
-                    <h3 id="hotspotTitle">우리학교 자원순환 관찰 데이터</h3>
-                    <p id="hotspotSummary">오늘 관찰 312건 / 판단 보류 21건 / 참여 반 14개</p>
-                    <small id="searchMessage">핀을 선택하거나 검색어를 입력해 관제 패널을 전환하세요.</small>
+                  <article class="compact-chart">
+                    <h3>학년별 참여 데이터</h3>
+                    <ul class="grade-bars">
+                      <li style="--value: 46"><span>3학년</span><strong>46</strong></li>
+                      <li style="--value: 58"><span>4학년</span><strong>58</strong></li>
+                      <li style="--value: 112"><span>5학년</span><strong>112</strong></li>
+                      <li style="--value: 96"><span>6학년</span><strong>96</strong></li>
+                    </ul>
                   </article>
                 </div>
               </section>
@@ -202,37 +113,37 @@
                 <div class="panel-head">
                   <div>
                     <p class="panel-kicker">Class Resource Dashboard</p>
-                    <h2 id="dashboard-title">5학년 1반 자원순환 대시보드</h2>
+                    <h2 id="dashboard-title">우리반 자원순환 대시보드</h2>
                     <p class="panel-copy">
                       우리반의 버리는 순간을 기록하고, 학교 자원순환 UX 개선 데이터로 전환합니다.
                     </p>
                   </div>
-                  <span class="sync-chip">DEMO · 수업용 프로토타입</span>
+                  <span class="sync-chip">5학년 1반</span>
                 </div>
 
                 <div class="kpi-grid class-kpi-grid" aria-label="5학년 1반 자원순환 지표">
-                  <article class="kpi-card wide" data-kpi-card="moments">
-                    <span class="kpi-label">우리반 오늘 배출 관찰</span>
+                  <article class="kpi-card" data-kpi-card="moments">
+                    <span class="kpi-label">오늘 배출 관찰</span>
                     <strong data-counter data-kpi="moments" data-target="128">0</strong>
                     <span class="delta-badge">+1</span>
                   </article>
                   <article class="kpi-card" data-kpi-card="requests">
-                    <span class="kpi-label">AI 1차 분류 요청</span>
+                    <span class="kpi-label">AI 1차 분류</span>
                     <strong data-counter data-kpi="requests" data-target="37">0</strong>
                     <span class="delta-badge">+1</span>
                   </article>
                   <article class="kpi-card" data-kpi-card="confirmed">
-                    <span class="kpi-label">학생 재확인 완료</span>
+                    <span class="kpi-label">학생 재확인</span>
                     <strong data-counter data-kpi="confirmed" data-target="18">0</strong>
                     <span class="delta-badge">+1</span>
                   </article>
                   <article class="kpi-card" data-kpi-card="held">
-                    <span class="kpi-label">판단 보류·추가 확인</span>
+                    <span class="kpi-label">판단 보류</span>
                     <strong data-counter data-kpi="held" data-target="7">0</strong>
                     <span class="delta-badge">+1</span>
                   </article>
                   <article class="kpi-card" data-kpi-card="converted">
-                    <span class="kpi-label">자원순환 전환 사례</span>
+                    <span class="kpi-label">전환 사례</span>
                     <strong data-counter data-kpi="converted" data-target="24">0</strong>
                     <span class="delta-badge">+1</span>
                   </article>
@@ -250,33 +161,10 @@
                     </ul>
                   </article>
 
-                  <article class="chart-card donut-card">
-                    <h3>분류 판단 비율</h3>
-                    <div class="donut-visual" aria-hidden="true"></div>
-                    <p>종이류 34% · 플라스틱 22% · 비닐류 18% · 일반쓰레기 16% · 판단 보류 10%</p>
-                  </article>
-
-                  <article class="chart-card spark-card">
-                    <h3>시간대별 배출 관찰</h3>
-                    <svg viewBox="0 0 240 90" aria-hidden="true">
-                      <path class="spark-fill" d="M8 74 56 61 104 27 152 42 204 34 232 72H8z" />
-                      <path class="spark-line" d="M8 74 56 61 104 27 152 42 204 34 232 25" />
-                    </svg>
-                    <p>등교 전 8 · 1~2교시 17 · 점심 전후 42 · 5~6교시 28 · 하교 전 33</p>
-                  </article>
-
-                  <article class="chart-card rank-card">
+                  <article class="chart-card rank-card compact-rank-card">
                     <h3>5학년 1반 참여 순위</h3>
-                    <strong id="rankHeadline">5학년 1반 · 학년 내 1위</strong>
-                    <span id="rankMeta">DEMO RANKING · 수업용 순위 시뮬레이션</span>
-                    <div class="rank-filters" aria-label="순위 범위 선택">
-                      <button class="is-active" type="button" data-rank-scope="class">우리반</button>
-                      <button type="button" data-rank-scope="grade">우리학년</button>
-                      <button type="button" data-rank-scope="school">우리학교</button>
-                      <button type="button" data-rank-scope="dong">우리동</button>
-                      <button type="button" data-rank-scope="gu">우리구</button>
-                      <button type="button" data-rank-scope="incheon">인천</button>
-                    </div>
+                    <strong>학년 내 1위 / 학교 내 2위</strong>
+                    <span>DEMO RANKING · 수업용 순위 시뮬레이션</span>
                   </article>
                 </div>
               </section>
@@ -289,10 +177,7 @@
                   </div>
                   <span class="monitor-orbit" aria-hidden="true"></span>
                 </div>
-                <p>
-                  공식 반입량 관리 구조에서 착안한 수업용 프로토타입입니다. 학교 안의 배출
-                  관찰, AI 1차 분류, 학생 재확인, 판단 보류 데이터로 변환했습니다.
-                </p>
+                <p>공식 반입량 관리 구조에서 착안한 수업용 프로토타입</p>
                 <div class="landfill-metrics">
                   <span><strong>18,420t</strong>생활폐기물 반입량</span>
                   <span><strong>-2.8%</strong>전일 대비</span>
@@ -304,6 +189,15 @@
                     <path class="spark-fill" d="M8 27 48 40 88 34 128 52 168 45 208 63 252 70 252 82H8z" />
                     <path class="spark-line" d="M8 27 48 40 88 34 128 52 168 45 208 63 252 70" />
                   </svg>
+                  <ul class="spark-labels" aria-label="최근 7일 반입량">
+                    <li>월 <strong>19,100</strong></li>
+                    <li>화 <strong>18,760</strong></li>
+                    <li>수 <strong>18,940</strong></li>
+                    <li>목 <strong>18,300</strong></li>
+                    <li>금 <strong>18,420</strong></li>
+                    <li>토 <strong>17,880</strong></li>
+                    <li>일 <strong>17,540</strong></li>
+                  </ul>
                   <div class="mini-ring" aria-label="총량 대비 반입률 63.4%"><span>63.4%</span></div>
                   <div class="capacity-bar" aria-label="잔여 관리 여력 36.6%">
                     <span style="width: 36.6%"></span>

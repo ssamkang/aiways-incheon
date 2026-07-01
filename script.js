@@ -48,52 +48,6 @@ const itemData = {
 
 const metricValues = {};
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const hotspotData = {
-  school: {
-    title: "우리학교 자원순환 관찰 데이터",
-    summary: "오늘 관찰 312건 / 판단 보류 21건 / 참여 반 14개",
-    message: "학교 단위 관찰 데이터를 5학년 1반 활동과 비교합니다.",
-  },
-  class: {
-    title: "5학년 1반 Dashboard",
-    summary: "오늘 관찰 128건 / AI 1차 분류 37건 / 학생 재확인 18건",
-    message: "첫 화면의 중심 데이터는 5학년 1반입니다.",
-  },
-  landfill: {
-    title: "수도권매립지 모니터",
-    summary: "생활폐기물 반입량 18,420t / 총량 대비 반입률 63.4%",
-    message: "DEMO · 공식 관리 지표 구조 참고 기반의 수업용 프로토타입입니다.",
-  },
-  bridge: {
-    title: "인천대교 데이터 라인",
-    summary: "교실 관찰 데이터가 지역 자원순환 경로로 확장되는 흐름",
-    message: "실제 교통·지도 API가 아닌 발표용 추상 관제 표현입니다.",
-  },
-  airport: {
-    title: "인천공항 확장 노드",
-    summary: "인천의 이동성과 순환 데이터를 상징하는 보조 지표",
-    message: "데이터 흐름의 확장 가능성을 보여주는 더미 노드입니다.",
-  },
-  gu: {
-    title: "우리구 비교 지표",
-    summary: "구 단위 참여 순위 12위 / 관찰 데이터 확산 중",
-    message: "우리반 데이터의 확장 범위를 보여주는 보조 지표입니다.",
-  },
-  dong: {
-    title: "우리동 비교 지표",
-    summary: "동 단위 참여 순위 7위 / 학교 주변 배출 혼선 관찰",
-    message: "학교 밖 생활권으로 연결되는 수업용 비교 노드입니다.",
-  },
-};
-
-const rankData = {
-  class: "5학년 1반 · 학년 내 1위",
-  grade: "5학년 전체 · 학교 내 2위",
-  school: "우리학교 · 동 단위 7위",
-  dong: "우리동 · 구 단위 12위",
-  gu: "우리구 · 인천 단위 48위",
-  incheon: "인천 전체 · 참여 데이터 확산 중",
-};
 
 let selectedFile = null;
 let currentItemKey = "paper";
@@ -106,9 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
   bindScrollButtons();
   bindAnchorNavigation();
   bindSectionScroller();
-  bindControlHotspots();
-  bindMapSearch();
-  bindRankingFilters();
   bindUploadDemo();
   bindResultActions();
   bindQuickApp();
@@ -168,7 +119,30 @@ function smoothScrollToTarget(selector) {
     return;
   }
 
-  animateScrollTo(window.scrollY + target.getBoundingClientRect().top, 980);
+  animateScrollTo(window.scrollY + target.getBoundingClientRect().top, 1080);
+}
+
+function appleEase(progress) {
+  const x1 = 0.22;
+  const y1 = 1;
+  const x2 = 0.36;
+  const y2 = 1;
+  const cx = 3 * x1;
+  const bx = 3 * (x2 - x1) - cx;
+  const ax = 1 - cx - bx;
+  const cy = 3 * y1;
+  const by = 3 * (y2 - y1) - cy;
+  const ay = 1 - cy - by;
+  let t = progress;
+
+  for (let i = 0; i < 5; i += 1) {
+    const x = ((ax * t + bx) * t + cx) * t - progress;
+    const derivative = (3 * ax * t + 2 * bx) * t + cx;
+    if (Math.abs(derivative) < 0.000001) break;
+    t = Math.min(1, Math.max(0, t - x / derivative));
+  }
+
+  return ((ay * t + by) * t + cy) * t;
 }
 
 function animateScrollTo(targetY, duration) {
@@ -180,15 +154,9 @@ function animateScrollTo(targetY, duration) {
 
   document.body.classList.add("is-section-scrolling");
 
-  function ease(t) {
-    return t < 0.5
-      ? 4 * t * t * t
-      : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
   function step(now) {
     const progress = Math.min((now - startTime) / duration, 1);
-    window.scrollTo(0, startY + distance * ease(progress));
+    window.scrollTo(0, startY + distance * appleEase(progress));
 
     if (progress < 1) {
       requestAnimationFrame(step);
@@ -234,7 +202,7 @@ function bindSectionScroller() {
       }
 
       wheelDelta += event.deltaY;
-      if (Math.abs(wheelDelta) < 100) return;
+      if (Math.abs(wheelDelta) < 170) return;
 
       event.preventDefault();
       const direction = wheelDelta > 0 ? 1 : -1;
@@ -242,10 +210,10 @@ function bindSectionScroller() {
 
       const nextIndex = Math.max(0, Math.min(sections.length - 1, currentSectionIndex() + direction));
       isLocked = true;
-      animateScrollTo(sections[nextIndex].offsetTop, 1080);
+      animateScrollTo(sections[nextIndex].offsetTop, 1120);
       window.setTimeout(() => {
         isLocked = false;
-      }, 1180);
+      }, 1240);
     },
     { passive: false }
   );
@@ -267,86 +235,10 @@ function bindSectionScroller() {
     event.preventDefault();
     const nextIndex = Math.max(0, Math.min(sections.length - 1, currentSectionIndex() + keyMap[event.key]));
     isLocked = true;
-    animateScrollTo(sections[nextIndex].offsetTop, 1040);
+    animateScrollTo(sections[nextIndex].offsetTop, 1080);
     window.setTimeout(() => {
       isLocked = false;
-    }, 1140);
-  });
-}
-
-function bindControlHotspots() {
-  const buttons = document.querySelectorAll("[data-hotspot]");
-  if (!buttons.length) return;
-
-  buttons.forEach((button) => {
-    const activate = () => activateHotspot(button.dataset.hotspot);
-    button.addEventListener("mouseenter", activate);
-    button.addEventListener("focus", activate);
-    button.addEventListener("click", activate);
-  });
-}
-
-function activateHotspot(key, messageOverride) {
-  const data = hotspotData[key] || hotspotData.school;
-  const detail = document.querySelector("#hotspotDetail");
-  const title = document.querySelector("#hotspotTitle");
-  const summary = document.querySelector("#hotspotSummary");
-  const message = document.querySelector("#searchMessage");
-
-  document
-    .querySelectorAll("[data-hotspot]")
-    .forEach((button) => button.classList.toggle("is-active", button.dataset.hotspot === key));
-
-  if (title) title.textContent = data.title;
-  if (summary) summary.textContent = data.summary;
-  if (message) message.textContent = messageOverride || data.message;
-
-  if (detail) {
-    detail.classList.remove("is-floating");
-    void detail.offsetWidth;
-    detail.classList.add("is-floating");
-  }
-}
-
-function bindMapSearch() {
-  const form = document.querySelector("#mapSearch");
-  const input = document.querySelector("#mapSearchInput");
-  if (!form || !input) return;
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const query = input.value.replace(/\s/g, "");
-    let key = "";
-
-    if (query.includes("우리학교") || query.includes("학교")) key = "school";
-    if (query.includes("5학년1반") || query.includes("1반")) key = "class";
-    if (query.includes("수도권매립지") || query.includes("매립지")) key = "landfill";
-
-    if (key) {
-      activateHotspot(key, "검색 결과를 관제 지도에서 강조했습니다.");
-      return;
-    }
-
-    const message = document.querySelector("#searchMessage");
-    if (message) {
-      message.textContent = "현재 데모에서는 우리학교, 5학년 1반, 수도권매립지를 확인할 수 있습니다.";
-    }
-  });
-}
-
-function bindRankingFilters() {
-  const headline = document.querySelector("#rankHeadline");
-  const meta = document.querySelector("#rankMeta");
-  const buttons = document.querySelectorAll("[data-rank-scope]");
-  if (!headline || !buttons.length) return;
-
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      buttons.forEach((scopeButton) => scopeButton.classList.remove("is-active"));
-      button.classList.add("is-active");
-      headline.textContent = rankData[button.dataset.rankScope] || rankData.class;
-      if (meta) meta.textContent = "DEMO RANKING · 수업용 순위 시뮬레이션";
-    });
+    }, 1200);
   });
 }
 

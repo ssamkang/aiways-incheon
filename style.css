@@ -2241,31 +2241,6 @@ main {
   line-height: 1.16;
 }
 
-.map-search {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 8px;
-  border: 1px solid rgba(101, 243, 213, 0.2);
-  border-radius: var(--radius);
-  padding: 6px;
-  background: rgba(1, 8, 18, 0.7);
-}
-
-.map-search input {
-  min-width: 0;
-  border: 0;
-  border-radius: var(--radius);
-  padding: 12px 12px;
-  color: var(--text);
-  background: transparent;
-  outline: 0;
-}
-
-.map-search input::placeholder {
-  color: rgba(191, 208, 223, 0.62);
-}
-
-.map-search button,
 .rank-filters button {
   min-height: 38px;
   border-radius: var(--radius);
@@ -2280,225 +2255,16 @@ main {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
-  grid-template-rows: minmax(410px, 1fr) minmax(300px, 0.75fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   grid-template-areas:
-    "map dashboard"
-    "landfill upload";
+    "school landfill"
+    "class upload";
   gap: 14px;
 }
 
-.map-panel {
-  grid-area: map;
-  min-width: 0;
-  overflow: hidden;
-  padding: 18px;
-}
-
-.map-canvas {
-  position: relative;
-  min-height: 360px;
-  overflow: hidden;
-  border: 1px solid rgba(85, 167, 255, 0.13);
-  border-radius: var(--radius);
-  background:
-    linear-gradient(180deg, rgba(85, 167, 255, 0.08), rgba(3, 9, 18, 0.2)),
-    rgba(1, 8, 18, 0.58);
-  transform: perspective(1100px) rotateX(3deg);
-  transform-origin: center;
-}
-
-.incheon-map-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.sea-field {
-  fill: rgba(3, 10, 20, 0.78);
-}
-
-.incheon-land {
-  fill: url("#landGlow");
-  stroke: rgba(153, 226, 255, 0.3);
-  stroke-width: 2;
-}
-
-.district-line,
-.airport-route,
-.data-flow-line {
-  fill: none;
-  stroke: rgba(191, 208, 223, 0.2);
-  stroke-width: 2;
-  stroke-dasharray: 8 10;
-}
-
-.bridge-line {
-  fill: none;
-  stroke: rgba(101, 243, 213, 0.12);
-  stroke-width: 16;
-}
-
-.bridge-track {
-  fill: none;
-  stroke: url("#bridgeGlow");
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-dasharray: 18 24;
-  animation: route-flow 8s linear infinite;
-}
-
-.data-flow-line {
-  stroke: rgba(101, 243, 213, 0.68);
-  stroke-width: 3;
-  stroke-dasharray: 14 18;
-  animation: route-flow 6.8s linear infinite;
-}
-
-.airport-route {
-  stroke: rgba(169, 134, 255, 0.5);
-  stroke-width: 3;
-}
-
-.plane-mark {
-  fill: var(--mint);
-  transform-origin: 705px 186px;
-  animation: plane-glide 12s ease-in-out infinite;
-}
-
-.wave-line {
-  fill: none;
-  stroke: rgba(85, 167, 255, 0.2);
-  stroke-width: 2;
-}
-
-.wave-b {
-  stroke: rgba(101, 243, 213, 0.16);
-}
-
-.map-hotspot {
-  position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 32px;
-  border: 1px solid rgba(101, 243, 213, 0.25);
-  border-radius: var(--radius);
-  padding: 7px 9px;
-  color: #eafffb;
-  background: rgba(4, 12, 24, 0.78);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
-  font-size: 0.8rem;
-  font-weight: 900;
-  transition:
-    transform 220ms ease,
-    border-color 220ms ease,
-    background 220ms ease;
-}
-
-.map-hotspot span {
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  background: var(--mint);
-  box-shadow: 0 0 18px rgba(101, 243, 213, 0.62);
-}
-
-.map-hotspot:hover,
-.map-hotspot:focus-visible,
-.map-hotspot.is-active {
-  z-index: 3;
-  transform: translateY(-4px) scale(1.03);
-  border-color: rgba(101, 243, 213, 0.72);
-  background: rgba(12, 31, 52, 0.94);
-}
-
-.hotspot-school {
-  left: 37%;
-  top: 40%;
-}
-
-.hotspot-class {
-  left: 49%;
-  top: 48%;
-}
-
-.hotspot-landfill {
-  left: 64%;
-  top: 25%;
-}
-
-.hotspot-bridge {
-  left: 22%;
-  top: 66%;
-}
-
-.hotspot-airport {
-  left: 76%;
-  top: 27%;
-}
-
-.hotspot-gu {
-  left: 31%;
-  top: 25%;
-}
-
-.hotspot-dong {
-  left: 55%;
-  top: 67%;
-}
-
-.hotspot-detail {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  left: 18px;
-  z-index: 2;
-  border: 1px solid rgba(101, 243, 213, 0.24);
-  border-radius: var(--radius);
-  padding: 15px;
-  background: rgba(5, 13, 26, 0.82);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(14px);
-  transform: translateY(0);
-  transition:
-    transform 240ms ease,
-    border-color 240ms ease;
-}
-
-.hotspot-detail.is-floating {
-  transform: translateY(-5px);
-  border-color: rgba(101, 243, 213, 0.56);
-}
-
-.detail-chip {
-  display: inline-flex;
-  margin-bottom: 7px;
-  color: var(--mint);
-  font-size: 0.72rem;
-  font-weight: 900;
-}
-
-.hotspot-detail h3 {
-  margin-bottom: 4px;
-  font-size: 1.05rem;
-}
-
-.hotspot-detail p,
-.hotspot-detail small {
-  display: block;
-  margin: 0;
-  color: #c5d7e7;
-}
-
-.hotspot-detail small {
-  margin-top: 5px;
-  color: var(--subtle);
-}
-
 .class-dashboard {
-  grid-area: dashboard;
+  grid-area: class;
   min-width: 0;
   overflow: hidden;
 }
@@ -2876,9 +2642,6 @@ body.is-section-scrolling .section-shell {
     gap: 8px;
   }
 
-  .map-canvas {
-    min-height: 320px;
-  }
 }
 
 @media (min-width: 2560px) {
@@ -2935,57 +2698,15 @@ body.is-section-scrolling .section-shell {
     font-size: 2.25rem;
   }
 
-  .map-search {
-    padding: 8px;
-  }
-
-  .map-search input,
-  .map-search button {
-    min-height: 58px;
-    font-size: 1.08rem;
-  }
-
   .control-stage-grid {
     height: calc(100% - 112px);
     grid-template-rows: minmax(850px, 1fr) minmax(500px, 0.66fr);
     gap: 22px;
   }
 
-  .map-panel,
   .landfill-monitor,
   .chart-card {
     padding: 26px;
-  }
-
-  .map-canvas {
-    min-height: 700px;
-  }
-
-  .map-hotspot {
-    min-height: 44px;
-    gap: 10px;
-    padding: 10px 13px;
-    font-size: 1.02rem;
-  }
-
-  .map-hotspot span {
-    width: 12px;
-    height: 12px;
-  }
-
-  .hotspot-detail {
-    right: 26px;
-    bottom: 26px;
-    left: 26px;
-    padding: 22px;
-  }
-
-  .hotspot-detail h3 {
-    font-size: 1.44rem;
-  }
-
-  .hotspot-detail p {
-    font-size: 1.12rem;
   }
 
   .class-dashboard {
@@ -3105,8 +2826,8 @@ body.is-section-scrolling .section-shell {
 
   .control-stage-grid {
     grid-template-areas:
-      "map"
-      "dashboard"
+      "school"
+      "class"
       "landfill"
       "upload";
     grid-template-rows: auto;
@@ -3127,14 +2848,704 @@ body.is-section-scrolling .section-shell {
     overflow: visible;
   }
 
-  .map-canvas {
-    min-height: 440px;
-  }
-
   .class-kpi-grid,
   .dashboard-analytics,
   .landfill-metrics {
     grid-template-columns: 1fr;
+  }
+}
+
+/* First screen dashboard refinement */
+html {
+  scroll-snap-type: y proximity;
+}
+
+.section-shell {
+  scroll-snap-stop: normal;
+}
+
+.brand-mark {
+  border-color: rgba(65, 245, 194, 0.38);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.16), transparent 66%),
+    rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 0 22px rgba(65, 245, 194, 0.2),
+    0 0 36px rgba(85, 167, 255, 0.14);
+}
+
+.brand-mark img {
+  width: 98%;
+  height: 98%;
+}
+
+.hero-lead span {
+  display: block;
+}
+
+.control-hero {
+  min-height: calc(100dvh - var(--header-height));
+  padding-top: calc(var(--header-height) + clamp(18px, 2.2dvh, 34px));
+  padding-bottom: clamp(18px, 2.2dvh, 34px);
+  overflow: clip;
+}
+
+.control-hero-grid {
+  height: calc(100dvh - var(--header-height) - clamp(48px, 5.4dvh, 78px));
+  min-height: 0;
+  grid-template-columns: minmax(420px, 0.72fr) minmax(0, 1.28fr);
+  align-items: stretch;
+  gap: clamp(20px, 1.55vw, 34px);
+}
+
+.control-copy {
+  align-self: center;
+}
+
+.control-copy .hero-lead {
+  max-width: 760px;
+  line-height: 1.72;
+  word-break: keep-all;
+}
+
+.control-stage {
+  height: 100%;
+  min-height: 0;
+  align-self: stretch;
+  padding: clamp(14px, 0.95vw, 20px);
+}
+
+.control-stage-grid {
+  height: 100%;
+  min-height: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "school landfill"
+    "class upload";
+  gap: clamp(12px, 0.8vw, 18px);
+}
+
+.school-dashboard {
+  grid-area: school;
+}
+
+.class-dashboard {
+  grid-area: class;
+}
+
+.school-dashboard,
+.class-dashboard,
+.landfill-monitor,
+.control-upload {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: clamp(14px, 0.95vw, 22px);
+}
+
+.control-stage .panel-head {
+  flex: 0 0 auto;
+  gap: 12px;
+  margin-bottom: clamp(8px, 0.72vw, 14px);
+}
+
+.control-stage .panel-head h2 {
+  font-size: clamp(1.08rem, 1.02vw, 1.38rem);
+  line-height: 1.18;
+  word-break: keep-all;
+}
+
+.control-stage .panel-kicker {
+  margin-bottom: 7px;
+  font-size: clamp(0.68rem, 0.64vw, 0.84rem);
+}
+
+.control-stage .panel-copy,
+.landfill-monitor p {
+  margin-bottom: clamp(8px, 0.7vw, 12px);
+  font-size: clamp(0.76rem, 0.68vw, 0.92rem);
+  line-height: 1.46;
+}
+
+.control-stage .sync-chip {
+  flex: 0 0 auto;
+  min-height: 26px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.school-dashboard-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+  gap: clamp(10px, 0.72vw, 14px);
+}
+
+.compact-kpi-grid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.compact-kpi-grid span,
+.compact-chart {
+  min-width: 0;
+  border: 1px solid rgba(153, 226, 255, 0.13);
+  border-radius: var(--radius);
+  background: rgba(1, 8, 18, 0.42);
+}
+
+.compact-kpi-grid span {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(9px, 0.75vw, 13px);
+  color: var(--muted);
+  font-size: clamp(0.68rem, 0.62vw, 0.82rem);
+  line-height: 1.28;
+}
+
+.compact-kpi-grid strong {
+  margin-bottom: 3px;
+  color: #f4fbff;
+  font-size: clamp(1.42rem, 2vw, 2.35rem);
+  line-height: 1;
+}
+
+.compact-chart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(10px, 0.82vw, 14px);
+}
+
+.compact-chart h3 {
+  margin-bottom: 9px;
+  color: #f0f8ff;
+  font-size: clamp(0.76rem, 0.72vw, 0.92rem);
+}
+
+.grade-bars {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grade-bars li {
+  position: relative;
+  min-height: 26px;
+  display: grid;
+  grid-template-columns: minmax(54px, 0.72fr) auto;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.grade-bars li::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--value) * 0.86%);
+  content: "";
+  background: linear-gradient(90deg, rgba(101, 243, 213, 0.32), rgba(85, 167, 255, 0.12));
+}
+
+.grade-bars span,
+.grade-bars strong {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(0.68rem, 0.62vw, 0.82rem);
+}
+
+.grade-bars strong {
+  color: var(--mint);
+}
+
+.class-kpi-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.class-kpi-grid .kpi-card,
+.class-kpi-grid .kpi-card.wide {
+  min-height: 78px;
+  grid-column: auto;
+  padding: 10px;
+}
+
+.class-kpi-grid .kpi-label {
+  min-height: 0;
+  font-size: clamp(0.62rem, 0.58vw, 0.76rem);
+  line-height: 1.25;
+}
+
+.class-kpi-grid .kpi-card strong,
+.class-kpi-grid .kpi-card.wide strong {
+  margin-top: 4px;
+  font-size: clamp(1.38rem, 1.72vw, 2.08rem);
+}
+
+.class-kpi-grid .delta-badge {
+  top: 8px;
+  right: 8px;
+  min-height: 20px;
+  padding: 2px 6px;
+  font-size: 0.62rem;
+}
+
+.dashboard-analytics {
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.chart-card {
+  min-height: 0;
+  padding: 10px;
+}
+
+.chart-card h3 {
+  margin-bottom: 8px;
+  font-size: clamp(0.74rem, 0.7vw, 0.9rem);
+}
+
+.bar-list {
+  gap: 5px;
+}
+
+.bar-list li {
+  min-height: 22px;
+  padding: 3px 7px;
+}
+
+.bar-list span,
+.bar-list strong {
+  font-size: clamp(0.65rem, 0.58vw, 0.78rem);
+}
+
+.compact-rank-card {
+  justify-content: center;
+}
+
+.compact-rank-card strong {
+  font-size: clamp(0.88rem, 0.92vw, 1.12rem);
+}
+
+.compact-rank-card span {
+  margin-bottom: 0;
+}
+
+.landfill-metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.landfill-metrics span {
+  padding: 8px;
+}
+
+.landfill-metrics strong {
+  font-size: clamp(1rem, 1.18vw, 1.36rem);
+}
+
+.landfill-visuals {
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) 72px;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.landfill-visuals svg {
+  height: clamp(54px, 5.4vw, 82px);
+}
+
+.spark-labels {
+  grid-column: 1 / 2;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spark-labels li {
+  color: var(--subtle);
+  font-size: clamp(0.52rem, 0.5vw, 0.66rem);
+  line-height: 1.18;
+  text-align: center;
+}
+
+.spark-labels strong {
+  display: block;
+  color: #d7f6ff;
+  font-size: inherit;
+}
+
+.mini-ring {
+  width: 72px;
+  align-self: center;
+}
+
+.capacity-bar {
+  height: 8px;
+}
+
+.control-upload .upload-drop {
+  min-height: 78px;
+  padding: 12px;
+}
+
+.control-upload .upload-symbol {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+}
+
+.control-upload .upload-actions {
+  margin-top: 8px;
+}
+
+.control-upload .mini-action {
+  min-height: 38px;
+  padding: 9px 12px;
+}
+
+.control-upload .notice {
+  margin-top: 8px;
+  font-size: clamp(0.7rem, 0.64vw, 0.84rem);
+}
+
+.control-upload .preview-wrap {
+  margin-top: 8px;
+}
+
+.control-upload .preview-wrap img {
+  max-height: 112px;
+}
+
+.control-upload .loading-state {
+  min-height: 42px;
+  margin-top: 8px;
+  padding: 8px 10px;
+}
+
+.control-upload .result-card {
+  margin-top: 8px;
+  padding: 10px;
+}
+
+.control-upload .result-list {
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.control-upload .guidance {
+  font-size: clamp(0.68rem, 0.62vw, 0.8rem);
+  line-height: 1.42;
+}
+
+.control-upload .result-actions {
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.control-upload .small {
+  min-height: 32px;
+  padding: 7px 9px;
+  font-size: 0.74rem;
+}
+
+@media (min-width: 1500px) and (max-width: 2559px) {
+  .control-hero {
+    width: min(1840px, calc(100% - 72px));
+    padding-top: calc(var(--header-height) + 22px);
+    padding-bottom: 24px;
+  }
+
+  .control-hero-grid {
+    height: calc(100dvh - var(--header-height) - 52px);
+    grid-template-columns: minmax(520px, 0.68fr) minmax(0, 1.32fr);
+    gap: 24px;
+  }
+
+  .control-copy h1 {
+    font-size: 4.9rem;
+  }
+
+  .control-copy .hero-lead {
+    font-size: 1.02rem;
+  }
+
+  .control-note span {
+    font-size: 0.86rem;
+  }
+
+  .control-stage {
+    padding: 14px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .brand {
+    gap: 20px;
+    font-size: 1.54rem;
+  }
+
+  .brand-mark {
+    flex-basis: 76px;
+    width: 76px;
+    height: 76px;
+    border-radius: 18px;
+  }
+
+  .control-hero {
+    width: min(3560px, calc(100% - 160px));
+    min-height: calc(100dvh - var(--header-height));
+    padding-top: calc(var(--header-height) + 46px);
+    padding-bottom: 46px;
+  }
+
+  .control-hero-grid {
+    height: calc(100dvh - var(--header-height) - 92px);
+    grid-template-columns: minmax(1280px, 0.58fr) minmax(0, 1.42fr);
+    gap: 64px;
+  }
+
+  .control-copy h1 {
+    max-width: 1280px;
+    margin-bottom: 42px;
+    font-size: clamp(10rem, 5.1vw, 11.8rem);
+    line-height: 0.96;
+  }
+
+  .control-copy .hero-lead {
+    max-width: 1240px;
+    margin-bottom: 46px;
+    font-size: 1.58rem;
+    line-height: 1.72;
+  }
+
+  .control-stage {
+    height: 100%;
+    min-height: 0;
+    padding: 30px;
+  }
+
+  .control-stage-grid {
+    height: 100%;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .school-dashboard,
+  .class-dashboard,
+  .landfill-monitor,
+  .control-upload {
+    padding: 28px;
+  }
+
+  .control-stage .panel-head {
+    margin-bottom: 16px;
+  }
+
+  .control-stage .panel-head h2 {
+    font-size: 1.72rem;
+  }
+
+  .control-stage .panel-copy,
+  .landfill-monitor p {
+    font-size: 0.98rem;
+  }
+
+  .school-dashboard-body {
+    gap: 18px;
+  }
+
+  .compact-kpi-grid {
+    gap: 14px;
+  }
+
+  .compact-kpi-grid span {
+    padding: 18px;
+    font-size: 0.98rem;
+  }
+
+  .compact-kpi-grid strong {
+    font-size: 3rem;
+  }
+
+  .compact-chart {
+    padding: 18px;
+  }
+
+  .compact-chart h3 {
+    font-size: 1.08rem;
+  }
+
+  .grade-bars {
+    gap: 12px;
+  }
+
+  .grade-bars li {
+    min-height: 38px;
+    padding: 6px 12px;
+  }
+
+  .grade-bars span,
+  .grade-bars strong {
+    font-size: 0.96rem;
+  }
+
+  .class-kpi-grid {
+    gap: 12px;
+  }
+
+  .class-kpi-grid .kpi-card,
+  .class-kpi-grid .kpi-card.wide {
+    min-height: 112px;
+    padding: 18px;
+  }
+
+  .class-kpi-grid .kpi-label {
+    font-size: 0.92rem;
+  }
+
+  .class-kpi-grid .kpi-card strong,
+  .class-kpi-grid .kpi-card.wide strong {
+    font-size: 2.95rem;
+  }
+
+  .dashboard-analytics {
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .chart-card {
+    padding: 20px;
+  }
+
+  .chart-card h3 {
+    font-size: 1.08rem;
+  }
+
+  .bar-list {
+    gap: 9px;
+  }
+
+  .bar-list li {
+    min-height: 34px;
+  }
+
+  .bar-list span,
+  .bar-list strong {
+    font-size: 0.94rem;
+  }
+
+  .compact-rank-card strong {
+    font-size: 1.26rem;
+  }
+
+  .landfill-metrics {
+    gap: 12px;
+  }
+
+  .landfill-metrics span {
+    padding: 14px;
+    font-size: 0.9rem;
+  }
+
+  .landfill-metrics strong {
+    font-size: 1.5rem;
+  }
+
+  .landfill-visuals {
+    grid-template-columns: minmax(0, 1fr) 108px;
+    gap: 18px;
+  }
+
+  .landfill-visuals svg {
+    height: 108px;
+  }
+
+  .spark-labels li {
+    font-size: 0.7rem;
+  }
+
+  .mini-ring {
+    width: 108px;
+  }
+
+  .control-upload .upload-drop {
+    min-height: 108px;
+    padding: 18px;
+  }
+
+  .control-upload .upload-symbol {
+    flex-basis: 58px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .control-upload .preview-wrap img {
+    max-height: 150px;
+  }
+
+  .control-upload .result-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .control-hero-grid {
+    height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .control-stage {
+    height: auto;
+    overflow: visible;
+  }
+
+  .control-stage-grid {
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "school"
+      "class"
+      "landfill"
+      "upload";
+    grid-template-rows: auto;
+  }
+
+  .school-dashboard-body,
+  .class-kpi-grid,
+  .dashboard-analytics,
+  .landfill-metrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 820px) {
+  html {
+    scroll-snap-type: none;
+  }
+
+  .control-hero {
+    min-height: 100dvh;
+    overflow: visible;
   }
 }
 
