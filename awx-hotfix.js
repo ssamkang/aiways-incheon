@@ -331,7 +331,7 @@
   function patchUploadCard() {
     const card = $(".upload-card");
     if (!card) return;
-    if ($(".cx-app", card)) {
+    if ($(".cx-app, .ny-app", card)) {
       card.classList.add("awx-live-card");
       return;
     }
